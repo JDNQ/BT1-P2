@@ -21,6 +21,6 @@
 
 ## 3) Chạy & kiểm tra
 
-- [ ] Chạy backend (migrations + seed nếu cần)
+- [x] Chạy backend (migrations + seed nếu cần)
 - [ ] Chạy frontend
 - [ ] Test flow tạo product kèm variants

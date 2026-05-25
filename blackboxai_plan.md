@@ -1,8 +1,9 @@
-# Plan: Product Form với Variants (Dynamic)
+# blackboxai_plan
 
 ## Thông tin đã nắm được
 
-- Repo hiện tại chỉ có `.gitattributes`, `.gitignore` (ngoài ra vừa tạo `TODO.md`).
+- Backend: NestJS + Prisma MySQL, CRUD cho `Product` và nested `variants`.
+- `ProductsService` đang dùng chiến lược update: `deleteMany` variants theo `productId` rồi tạo mới.
 - Không có sẵn backend/frontend code => cần **tạo mới toàn bộ** 2 project.
 - Đúng theo spec user: NestJS + Prisma(MySQL) + Swagger + DTO validation; Frontend NextJS + React Hook Form + Zod + Tailwind.
 

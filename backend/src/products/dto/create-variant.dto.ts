@@ -39,6 +39,6 @@ export class CreateVariantDto {
   @Type(() => Number)
   @IsOptional()
   @IsInt({ message: "stock phải là số nguyên" })
-  @Min(0)
+  @Min(0, { message: "stock phải hơn hoặc bằng 0" })
   stock: number = 0;
 }

@@ -4,7 +4,7 @@ import { z } from "zod";
 export const variantSchema = z.object({
   variantName: z.string().min(1, "Variant name là bắt buộc"),
   extraPrice: z.number().min(0).default(0),
-  stock: z.number().min(0, "Stock phải lớn hơn hoặc bằng 0"),
+  stock: z.number().min(0, "stock phải hơn hoặc bằng 0"),
 });
 
 // Schema Product dùng cho toàn form

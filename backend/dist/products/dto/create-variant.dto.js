@@ -59,6 +59,6 @@ __decorate([
     (0, class_transformer_1.Type)(() => Number),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsInt)({ message: "stock phải là số nguyên" }),
-    (0, class_validator_1.Min)(0),
+    (0, class_validator_1.Min)(0, { message: "stock phải hơn hoặc bằng 0" }),
     __metadata("design:type", Number)
 ], CreateVariantDto.prototype, "stock", void 0);
