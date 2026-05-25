@@ -72,9 +72,9 @@ export default function VariantRow({
               <input
                 type="number"
                 value={rhfField.value ?? 0}
-                // RHF Controller không có valueAsNumber option, nên parse number thủ công.
-                // Backend đã validate min(0), giúp đảm bảo dữ liệu hợp lệ.
-                onChange={(e) => rhfField.onChange(Number(e.target.value))}
+                // Spec yêu cầu: input number phải dùng `valueAsNumber: true`.
+                // Với Controller, dùng `e.target.valueAsNumber` để đảm bảo kiểu number.
+                onChange={(e) => rhfField.onChange(e.target.valueAsNumber)}
                 className={`border rounded px-3 py-1.5 w-full text-sm border-gray-300 focus:outline-none focus:ring-1 focus:ring-[#6C21E8] ${
                   variantError?.extraPrice
                     ? "border-red-500 ring-1 ring-red-300 focus:ring-red-300"
@@ -100,8 +100,18 @@ export default function VariantRow({
             <div>
               <input
                 type="number"
-                value={rhfField.value ?? 0}
-                onChange={(e) => rhfField.onChange(Number(e.target.value))}
+                value={
+                  typeof rhfField.value === "number" &&
+                  Number.isFinite(rhfField.value)
+                    ? rhfField.value
+                    : ""
+                }
+                onChange={(e) => rhfField.onChange(e.target.valueAsNumber)}
+                onBlur={(e) => {
+                  // Nếu người dùng xoá hết ô -> valueAsNumber thành NaN, map về 0.
+                  if (Number.isNaN(e.target.valueAsNumber))
+                    rhfField.onChange(0);
+                }}
                 className={`border rounded px-3 py-1.5 w-full text-sm ${
                   variantError?.stock
                     ? "border-red-500 ring-1 ring-red-300"
@@ -112,6 +122,7 @@ export default function VariantRow({
                     : "focus:ring-[#6C21E8]"
                 }`}
               />
+              {/* Stock phải >= 0 (Zod check nested variants) */}
               {variantError?.stock?.message ? (
                 <p className="text-red-500 text-xs mt-1 font-medium">
                   {variantError.stock.message}
