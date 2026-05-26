@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { productSchema } from "@/schemas/productSchema";
@@ -50,14 +50,37 @@ export default function ProductForm() {
   const productName = watch("productName") ?? "";
   const charCount = productName.length;
 
+  const [notice, setNotice] = useState<{
+    type: "success" | "error";
+    text: string;
+  } | null>(null);
+
   const onSubmit = async (values: ProductSchema) => {
-    const res = await fetch("http://localhost:3001/products", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(values),
-    });
-    const data = await res.json();
-    console.log(data);
+    setNotice(null);
+
+    try {
+      const res = await fetch("http://localhost:3001/products", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+
+      const data = await res.json().catch(() => null);
+
+      if (!res.ok) {
+        const msg = (data && (data.message || data.error)) || "Lưu thất bại";
+        setNotice({ type: "error", text: msg });
+        return;
+      }
+
+      console.log(data);
+      setNotice({
+        type: "success",
+        text: "Đã lưu sản phẩm vào DB thành công",
+      });
+    } catch (e) {
+      setNotice({ type: "error", text: "Lưu thất bại" });
+    }
   };
 
   return (
@@ -130,6 +153,20 @@ export default function ProductForm() {
             </p>
           )}
         </div>
+
+        {/* Notice */}
+        {notice ? (
+          <div
+            className={`mb-4 rounded-lg border px-4 py-3 text-sm font-medium ${
+              notice.type === "success"
+                ? "border-green-200 bg-green-50 text-green-800"
+                : "border-red-200 bg-red-50 text-red-800"
+            }`}
+            role="status"
+          >
+            {notice.text}
+          </div>
+        ) : null}
 
         {/* Variants */}
         <VariantList

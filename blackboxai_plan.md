@@ -1,61 +1,27 @@
-# blackboxai_plan
+# Plan: Thêm thông báo “đã lưu sản phẩm vào DB chưa”
 
-## Thông tin đã nắm được
+## Information Gathered
 
-- Backend: NestJS + Prisma MySQL, CRUD cho `Product` và nested `variants`.
-- `ProductsService` đang dùng chiến lược update: `deleteMany` variants theo `productId` rồi tạo mới.
-- Không có sẵn backend/frontend code => cần **tạo mới toàn bộ** 2 project.
-- Đúng theo spec user: NestJS + Prisma(MySQL) + Swagger + DTO validation; Frontend NextJS + React Hook Form + Zod + Tailwind.
+- Backend: `backend/src/products/products.service.ts` tạo product + variants bằng `prisma.product.create(...)` và trả về object product kèm variants.
+- Frontend: `frontend/src/components/ProductForm.tsx` gửi POST tới `http://localhost:3001/products` và hiện đang chỉ `console.log(data)`.
+- Không thấy sẵn toast/notification component trong `frontend/src`.
 
-## Kế hoạch triển khai (file-level)
+## Plan
 
-### A. Backend (`backend/`)
+1. Backend (tùy chọn nhưng khuyến nghị): trả về một trường rõ ràng (ví dụ `success: true` và/hoặc `message`) để frontend hiển thị.
+2. Frontend: trong `ProductForm.tsx` thêm state `notification` (type: success/error/loading), render một block alert ngay trong form.
+3. Khi submit:
+   - set `loading` (dựa vào `isSubmitting` hiện có),
+   - nếu `res.ok` và có `success`/data hợp lệ => hiển thị thông báo “Đã lưu sản phẩm vào DB thành công”.
+   - nếu lỗi => hiển thị “Lưu thất bại”.
+4. Dọn lại `console.log` (giữ lại cũng được), đảm bảo UX: thông báo biến mất khi người dùng submit lại.
 
-1. Tạo `backend/package.json`, `nest` skeleton, cài deps:
-   - @nestjs/\*, prisma, @prisma/client
-   - @nestjs/swagger swagger-ui-express
-   - class-validator class-transformer
-   - mysql2
-2. Tạo `backend/prisma/schema.prisma` với 2 model `Product`, `Variant` (quan hệ 1-n).
-3. Tạo module:
-   - `backend/src/products/products.module.ts`
-   - `backend/src/products/products.controller.ts`
-   - `backend/src/products/products.service.ts`
-   - DTOs:
-     - `backend/src/products/dto/create-product.dto.ts`
-     - `backend/src/products/dto/create-variant.dto.ts`
-4. Enable Swagger ở `backend/src/main.ts`.
-5. Implement API:
-   - POST /products (create product + variants)
-   - GET /products (list incl variants)
-   - GET /products/:id
-   - PUT /products/:id (update product + variants)
-   - DELETE /products/:id
+## Dependent Files to be edited
 
-### B. Frontend (`frontend/`)
+- `frontend/src/components/ProductForm.tsx`
+- (khuyến nghị) `backend/src/products/products.service.ts`
 
-1. Tạo `frontend/package.json`, NextJS App Router skeleton.
-2. Cài deps:
-   - react-hook-form, zod, @hookform/resolvers
-   - tailwindcss
-3. Tạo structure:
-   - `frontend/src/schemas/productSchema.ts`
-   - `frontend/src/components/ProductForm.tsx`
-   - `frontend/src/components/VariantList.tsx`
-   - `frontend/src/components/VariantRow.tsx`
-   - `frontend/src/app/products/page.tsx`
-4. Implement UI theo yêu cầu Tailwind + realtime metrics:
-   - Tổng variants, tổng stock realtime (dùng `useWatch`).
-   - useFieldArray quản lý variants dynamic; key = field.id.
-   - Nút remove disabled khi còn 1 variant; tooltip.
-   - Error message hiển thị đúng từng field nested.
-5. Submit gọi API `POST /products` và `console.log` response.
+## Followup steps
 
-### C. Chạy & kiểm tra
-
-1. Backend:
-   - Cấu hình `.env` (DATABASE_URL)
-   - `prisma migrate dev`
-2. Frontend:
-   - Chạy `next dev`
-3. Smoke test: tạo product, kiểm tra hiển thị errors & realtime.
+- Chạy backend và frontend, submit form và kiểm tra hiển thị thông báo.
+- Nếu cần, cập nhật styling alert bằng Tailwind có sẵn.
