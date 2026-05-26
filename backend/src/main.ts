@@ -6,9 +6,12 @@ import { AppModule } from "./app.module";
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // CORS (allow frontend on localhost:3000 to call backend on localhost:3001)
+  // CORS (allow Vercel frontend + local frontend to call backend)
   app.enableCors({
-    origin: "http://localhost:3000",
+    origin: [
+      "https://bt-1-p2-zxnk.vercel.app", // domain Vercel của bạn
+      "http://localhost:3000",
+    ],
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
@@ -25,8 +28,8 @@ async function bootstrap() {
 
   // Swagger UI at /api
   const config = new DocumentBuilder()
-    .setTitle("Products API")
-    .setDescription("API for Products with dynamic Variants")
+    .setTitle("BT1-P2 API")
+    .setDescription("API documentation")
     .setVersion("1.0")
     .build();
 

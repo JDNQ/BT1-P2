@@ -2,12 +2,6 @@ import { ApiProperty } from "@nestjs/swagger";
 import { Type } from "class-transformer";
 import { IsInt, IsNumber, IsOptional, IsNotEmpty, Min } from "class-validator";
 
-/**
- * DTO cho từng Variant.
- * - variantName bắt buộc, có độ dài tự do (DB sẽ lưu theo schema)
- * - extraPrice mặc định 0
- * - stock mặc định 0 và min 0
- */
 export class CreateVariantDto {
   @ApiProperty({
     example: "M - Trắng",
