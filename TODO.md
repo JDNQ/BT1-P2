@@ -1,6 +1,3 @@
-# TODO
-
-- [ ] Add Vercel Analytics to Next.js App Router layout
-  - [ ] Update `frontend/src/app/layout.tsx`
-    - [ ] Import `Analytics` from `@vercel/analytics/next`
-    - [ ] Render `<Analytics />` inside `RootLayout` (inside `<body>`)
+- [ ] Cập nhật ProductForm.tsx: thay URL hardcode bằng biến môi trường NEXT_PUBLIC_API_URL
+- [ ] (Tuỳ chọn) Tạo/nhắc thêm file frontend/.env.local với NEXT_PUBLIC_API_URL
+- [ ] Chạy thử build/lint nếu có script để đảm bảo không lỗi TypeScript
