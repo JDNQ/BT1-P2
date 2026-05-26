@@ -4,7 +4,7 @@
   "description": "NestJS backend for Products & Variants",
   "private": true,
   "scripts": {
-    "build": "nest build",
+    "build": "prisma generate && nest build",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "lint": "echo \"no lint configured\"",

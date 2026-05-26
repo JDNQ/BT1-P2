@@ -73,7 +73,7 @@ export default function ProductForm() {
         return;
       }
 
-      console.log(data);
+
       setNotice({
         type: "success",
         text: "Đã lưu sản phẩm vào DB thành công",
@@ -105,11 +105,9 @@ export default function ProductForm() {
           <input
             {...register("productName")}
             placeholder="Nhập tên sản phẩm (tối đa 100 ký tự)"
-            className={`border rounded-lg px-4 py-2 w-full mt-1 ${
-              errors.productName ? "border-red-500" : "border-gray-300"
-            } focus:outline-none focus:ring-1 ${
-              errors.productName ? "ring-red-300" : "focus:ring-[#6C21E8]"
-            }`}
+            className={`border rounded-lg px-4 py-2 w-full mt-1 ${errors.productName ? "border-red-500" : "border-gray-300"
+              } focus:outline-none focus:ring-1 ${errors.productName ? "ring-red-300" : "focus:ring-[#6C21E8]"
+              }`}
           />
 
           {errors.productName && (
@@ -140,11 +138,9 @@ export default function ProductForm() {
             type="number"
             {...register("basePrice", { valueAsNumber: true })}
             placeholder="Nhập giá gốc (>= 0)"
-            className={`border rounded-lg px-4 py-2 w-full mt-1 ${
-              errors.basePrice ? "border-red-500" : "border-gray-300"
-            } focus:outline-none focus:ring-1 ${
-              errors.basePrice ? "ring-red-300" : "focus:ring-[#6C21E8]"
-            }`}
+            className={`border rounded-lg px-4 py-2 w-full mt-1 ${errors.basePrice ? "border-red-500" : "border-gray-300"
+              } focus:outline-none focus:ring-1 ${errors.basePrice ? "ring-red-300" : "focus:ring-[#6C21E8]"
+              }`}
           />
 
           {errors.basePrice && (
@@ -157,11 +153,10 @@ export default function ProductForm() {
         {/* Notice */}
         {notice ? (
           <div
-            className={`mb-4 rounded-lg border px-4 py-3 text-sm font-medium ${
-              notice.type === "success"
-                ? "border-green-200 bg-green-50 text-green-800"
-                : "border-red-200 bg-red-50 text-red-800"
-            }`}
+            className={`mb-4 rounded-lg border px-4 py-3 text-sm font-medium ${notice.type === "success"
+              ? "border-green-200 bg-green-50 text-green-800"
+              : "border-red-200 bg-red-50 text-red-800"
+              }`}
             role="status"
           >
             {notice.text}
@@ -184,9 +179,8 @@ export default function ProductForm() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className={`w-full mt-6 bg-[#6C21E8] hover:bg-[#5a18c9] transition-all duration-200 text-white font-semibold text-base py-3 rounded-lg flex items-center justify-center gap-2 ${
-            isSubmitting ? "opacity-70 cursor-not-allowed" : ""
-          }`}
+          className={`w-full mt-6 bg-[#6C21E8] hover:bg-[#5a18c9] transition-all duration-200 text-white font-semibold text-base py-3 rounded-lg flex items-center justify-center gap-2 ${isSubmitting ? "opacity-70 cursor-not-allowed" : ""
+            }`}
         >
           {isSubmitting ? (
             <span className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full" />

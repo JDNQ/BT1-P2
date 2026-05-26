@@ -1,3 +1,4 @@
+-- Active: 1778662335917@@127.0.0.1@3306@dynamic
 -- CreateTable
 CREATE TABLE `Product` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,

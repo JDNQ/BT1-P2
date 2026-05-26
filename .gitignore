@@ -1,4 +1,22 @@
 
 
-#Ignore vscode AI rules
-.github\instructions\codacy.instructions.md
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+.next/
+
+# Environment files
+.env
+.env.local
+.env*.local
+backend/.env
+
+# Logs
+*.log
+
+# VSCode
+.vscode/
+.github/instructions/codacy.instructions.md
+
